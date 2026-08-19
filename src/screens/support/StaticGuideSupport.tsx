@@ -12,8 +12,8 @@ export function StaticGuideSupport({ itemKey, onConfirm }: Props) {
 
   return (
     <div className="screen">
-      <div className="section-heading">지금 할 일</div>
-      <p className="reason-text" style={{ fontSize: 16, marginBottom: 24 }}>
+      <h1 className="support-title">지금 할 일</h1>
+      <p className="reason-text support-guide-text">
         {content.guideText}
       </p>
       {isHolidayGuide && <>
