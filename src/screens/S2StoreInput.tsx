@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { CaptureImage } from '../domain/types';
 import type { StoreCaptureInput } from '../services/storeInputService';
 
@@ -43,13 +43,6 @@ export function S2StoreInput({ onSubmit, error }: Props) {
   const [captures, setCaptures] = useState<CaptureImage[]>([]);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const addressRef = useRef<HTMLElement>(null);
-  const capturesRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const target = step === 2 ? addressRef.current : step === 3 ? capturesRef.current : null;
-    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, [step]);
 
   const handleFilePick = () => inputRef.current?.click();
 
@@ -89,108 +82,51 @@ export function S2StoreInput({ onSubmit, error }: Props) {
   };
 
   return (
-    <div className="screen">
-      <section className="input-step">
-        <div className="progress">1 / 3</div>
+    <div className="screen input-flow">
+      <div className="input-flow-header">
+        <div className="progress">{step} / 3</div>
         <h1 className="intro-title" style={{ fontSize: 24 }}>
-          가게 이름을
-          <br />
-          알려주세요
+          {step === 1 && <>가게 이름을<br />알려주세요</>}
+          {step === 2 && <>{storeName}의<br />주소를 알려주세요</>}
+          {step === 3 && <>{storeName}의<br />화면을 올려주세요</>}
         </h1>
-        <p className="intro-desc">진단 결과에 가게 이름을 표시해드릴게요.</p>
-        <label className="field-label" htmlFor="store-name">
-          가게 이름
-        </label>
-        <input
-          id="store-name"
-          type="text"
-          value={storeName}
-          onChange={(event) => setStoreName(event.target.value)}
-          placeholder="예: 우리동네 헬스장"
-          onKeyDown={(event) => event.key === 'Enter' && storeName.trim() && setStep(2)}
-        />
-        <div className="spacer" />
-        <button className="btn-primary" disabled={!storeName.trim()} onClick={() => setStep(2)}>
-          다음
-        </button>
-      </section>
-
-      <section ref={addressRef} className="input-step">
-        <div className="progress">2 / 3</div>
-        <h2 className="intro-title" style={{ fontSize: 24 }}>
-          네이버 플레이스 주소를
-          <br />
-          붙여넣어 주세요
-        </h2>
-        <p className="intro-desc">주소는 가게 정보를 확인하는 데 사용해요.</p>
-        <label className="field-label" htmlFor="place-url">
-          네이버 플레이스 주소
-        </label>
-        <input
-          id="place-url"
-          type="url"
-          value={placeUrl}
-          onChange={(event) => setPlaceUrl(event.target.value)}
-          placeholder="https://m.place.naver.com/..."
-          onKeyDown={(event) => event.key === 'Enter' && placeUrl.trim() && setStep(3)}
-        />
-        <div className="spacer" />
-        <button className="btn-primary" disabled={!placeUrl.trim()} onClick={() => setStep(3)}>
-          다음
-        </button>
-      </section>
-
-      <section ref={capturesRef} className="input-step">
-        <div className="progress">3 / 3</div>
-        <h2 className="intro-title" style={{ fontSize: 24 }}>
-          네이버 플레이스 화면을
-          <br />
-          올려주세요
-        </h2>
         <p className="intro-desc">
-          영업시간, 휴무일, 사진, 새소식, 리뷰가 보이도록
-          <br />
-          캡처해 올려주세요.
+          {step === 1 && '진단 결과에 가게 이름을 표시해드릴게요.'}
+          {step === 2 && '네이버 플레이스 주소를 붙여넣어 주세요.'}
+          {step === 3 && '영업시간, 휴무일, 사진, 새소식, 리뷰가 보이도록 캡처해 주세요.'}
         </p>
-        <button className="upload-box" type="button" onClick={handleFilePick}>
-          {captures.length > 0
-            ? `${captures.length}장 선택됨 — 탭해서 더 올리기`
-            : '탭해서 네이버 플레이스 캡처 올리기'}
-        </button>
-        <input
-          ref={inputRef}
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          multiple
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
+        {step > 1 && <div className="input-summary">가게 이름 · {storeName}</div>}
+        {step === 3 && <div className="input-summary">플레이스 주소가 입력됐어요</div>}
+      </div>
 
-        {captures.length > 0 && (
-          <ul className="capture-list">
-            {captures.map((capture, index) => (
-              <li key={`${capture.name}-${index}`}>
-                <span>{capture.name}</span>
-                <button type="button" onClick={() => setCaptures((items) => items.filter((_, i) => i !== index))}>
-                  삭제
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+      <div className="input-sheet" key={step}>
+        {step === 1 && <>
+          <label className="field-label" htmlFor="store-name">가게 이름</label>
+          <input id="store-name" type="text" value={storeName} onChange={(event) => setStoreName(event.target.value)} placeholder="예: 우리동네 헬스장" onKeyDown={(event) => event.key === 'Enter' && storeName.trim() && setStep(2)} />
+          <button className="btn-primary" disabled={!storeName.trim()} onClick={() => setStep(2)}>다음</button>
+        </>}
 
-        {(uploadError || error) && <p className="error-text">{uploadError ?? error}</p>}
-        <div className="spacer" />
-        <button
-          className="btn-primary"
-          disabled={!storeName.trim() || !placeUrl.trim() || captures.length === 0}
-          onClick={() =>
-            onSubmit({ type: 'captureUpload', storeName: storeName.trim(), placeUrl: placeUrl.trim(), captures })
-          }
-        >
-          실제 진단 시작하기
-        </button>
-      </section>
+        {step === 2 && <>
+          <label className="field-label" htmlFor="place-url">네이버 플레이스 주소</label>
+          <input id="place-url" type="url" value={placeUrl} onChange={(event) => setPlaceUrl(event.target.value)} placeholder="https://m.place.naver.com/..." onKeyDown={(event) => event.key === 'Enter' && placeUrl.trim() && setStep(3)} />
+          <button className="btn-primary" disabled={!placeUrl.trim()} onClick={() => setStep(3)}>다음</button>
+        </>}
+
+        {step === 3 && <>
+          <button className="upload-box" type="button" onClick={handleFilePick}>
+            {captures.length > 0 ? `${captures.length}장 선택됨 — 탭해서 더 올리기` : '탭해서 네이버 플레이스 캡처 올리기'}
+          </button>
+          <input ref={inputRef} type="file" accept="image/png,image/jpeg,image/webp" multiple style={{ display: 'none' }} onChange={handleFileChange} />
+          {captures.length > 0 && <ul className="capture-list">
+            {captures.map((capture, index) => <li key={`${capture.name}-${index}`}>
+              <span>{capture.name}</span>
+              <button type="button" onClick={() => setCaptures((items) => items.filter((_, i) => i !== index))}>삭제</button>
+            </li>)}
+          </ul>}
+          {(uploadError || error) && <p className="error-text">{uploadError ?? error}</p>}
+          <button className="btn-primary" disabled={captures.length === 0} onClick={() => onSubmit({ type: 'captureUpload', storeName: storeName.trim(), placeUrl: placeUrl.trim(), captures })}>실제 진단 시작하기</button>
+        </>}
+      </div>
     </div>
   );
 }

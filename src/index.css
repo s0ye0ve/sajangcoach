@@ -27,13 +27,37 @@ body {
   flex-direction: column;
 }
 
-.input-step {
-  display: flex;
-  flex: 1 0 100dvh;
-  flex-direction: column;
-  min-height: 100dvh;
-  padding-bottom: 32px;
-  scroll-margin-top: 0;
+.input-flow {
+  overflow: hidden;
+}
+
+.input-flow-header {
+  flex: 1;
+}
+
+.input-summary {
+  margin-top: 12px;
+  color: #666;
+  font-size: 13px;
+}
+
+.input-sheet {
+  margin: 0 -20px -32px;
+  max-height: 58dvh;
+  overflow-y: auto;
+  padding: 24px 20px 32px;
+  border-radius: 20px 20px 0 0;
+  background: #f7f7f8;
+  animation: slide-up 280ms ease-out;
+}
+
+.input-sheet .btn-primary {
+  margin-top: 20px;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .progress {
