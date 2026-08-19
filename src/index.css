@@ -27,6 +27,15 @@ body {
   flex-direction: column;
 }
 
+.input-step {
+  display: flex;
+  flex: 1 0 100dvh;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding-bottom: 32px;
+  scroll-margin-top: 0;
+}
+
 .progress {
   font-size: 13px;
   color: #888;
