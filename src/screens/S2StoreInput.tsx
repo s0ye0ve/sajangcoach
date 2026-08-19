@@ -41,6 +41,7 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
   const [expandedGuide, setExpandedGuide] = useState<CaptureGuideItem | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { step, gymName, captures } = onboarding;
+  const naverMapAppLink = `nmap://search?query=${encodeURIComponent(gymName)}`;
 
   useEffect(() => {
     if (window.history.state?.onboardingStep == null) {
@@ -138,7 +139,7 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
         <p className="intro-desc">가이드에서 본 화면들을 캡처한 뒤<br />다시 돌아와 주세요.</p>
         <div className="input-summary"><span>헬스장 이름</span><strong>{gymName}</strong></div>
         <div className="map-action">
-          <a className="map-find-button" href="https://map.naver.com/" target="_blank" rel="noreferrer">네이버 지도에서 내 헬스장 찾기 ↗</a>
+          <a className="map-find-button" href={naverMapAppLink}>네이버 지도 앱에서 내 헬스장 찾기 ↗</a>
         </div>
         <button className="btn-primary map-next-button" type="button" onClick={() => goToStep(4)}>캡처 이미지 올리기</button>
       </>}
