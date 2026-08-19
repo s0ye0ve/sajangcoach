@@ -17,7 +17,7 @@ function App() {
     case 'S2':
       return <S2StoreInput onSubmit={submitCapture} error={state.error} />;
     case 'S3':
-      return <S3Diagnosing storeName={state.store?.name ?? '가게'} />;
+      return <S3Diagnosing storeName={state.store?.name ?? '헬스장'} />;
     case 'S4':
       return currentItem ? (
         <S4DiagnosisResult

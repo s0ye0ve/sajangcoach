@@ -22,7 +22,7 @@ export const DIAGNOSIS_CONTENT: Record<ItemKey, DiagnosisContent> = {
   photos: {
     itemKey: 'photos',
     problemText: '대표 사진이 부족해요',
-    reasonText: '가게 분위기를 미리 보여주면\n방문 결정에 도움이 돼요',
+    reasonText: '헬스장 분위기를 미리 보여주면\n방문 결정에 도움이 돼요',
     todoText: '사진 한 장, 지금 찍어볼까요?',
     ctaLabel: '사진 등록하기',
     completionText: '사진, 등록했어요',
@@ -30,7 +30,7 @@ export const DIAGNOSIS_CONTENT: Record<ItemKey, DiagnosisContent> = {
   news: {
     itemKey: 'news',
     problemText: '새소식이 오래 업데이트되지 않았어요',
-    reasonText: '가게가 지금도 잘 운영되고 있다는 걸\n자연스럽게 보여줄 수 있어요',
+    reasonText: '헬스장이 지금도 잘 운영되고 있다는 걸\n자연스럽게 보여줄 수 있어요',
     todoText: '새소식 하나, 지금 올려볼까요?',
     ctaLabel: '새소식 작성하기',
     completionText: '새소식, 올렸어요',

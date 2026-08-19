@@ -86,22 +86,22 @@ export function S2StoreInput({ onSubmit, error }: Props) {
       <div className="input-flow-header">
         <div className="progress">{step} / 3</div>
         <h1 className="intro-title" style={{ fontSize: 24 }}>
-          {step === 1 && <>가게 이름을<br />알려주세요</>}
+          {step === 1 && <>헬스장 이름을<br />알려주세요</>}
           {step === 2 && <>{storeName}의<br />주소를 알려주세요</>}
           {step === 3 && <>{storeName}의<br />화면을 올려주세요</>}
         </h1>
         <p className="intro-desc">
-          {step === 1 && '진단 결과에 가게 이름을 표시해드릴게요.'}
+          {step === 1 && '진단 결과에 헬스장 이름을 표시해드릴게요.'}
           {step === 2 && '네이버 플레이스 주소를 붙여넣어 주세요.'}
           {step === 3 && '영업시간, 휴무일, 사진, 새소식, 리뷰가 보이도록 캡처해 주세요.'}
         </p>
-        {step > 1 && <div className="input-summary">가게 이름 · {storeName}</div>}
+        {step > 1 && <div className="input-summary">헬스장 이름 · {storeName}</div>}
         {step === 3 && <div className="input-summary">플레이스 주소가 입력됐어요</div>}
       </div>
 
       <div className="input-stage" key={step}>
         {step === 1 && <>
-          <label className="field-label" htmlFor="store-name">가게 이름</label>
+          <label className="field-label" htmlFor="store-name">헬스장 이름</label>
           <input id="store-name" type="text" value={storeName} onChange={(event) => setStoreName(event.target.value)} placeholder="예: 우리동네 헬스장" onKeyDown={(event) => event.key === 'Enter' && storeName.trim() && setStep(2)} />
           <button className="btn-primary" disabled={!storeName.trim()} onClick={() => setStep(2)}>다음</button>
         </>}
