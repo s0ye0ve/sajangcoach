@@ -104,8 +104,8 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
       </>}
 
       {step === 2 && <>
-        <h1 className="intro-title" style={{ fontSize: 24 }}>이 화면들을<br />캡처해 주세요</h1>
-        <p className="intro-desc">네이버 지도에 들어가기 전에<br />필요한 화면을 미리 확인해 주세요.</p>
+        <h1 className="intro-title guide-title">캡처할 화면을 확인해 주세요</h1>
+        <p className="intro-desc guide-header-desc">네이버 지도에 들어가기 전에<br />아래 4개 화면을 확인해 주세요.</p>
         <div className="guide-list">
           {CAPTURE_GUIDE_ITEMS.map((item) => <article className="guide-card" key={item.title}>
             <div className="guide-placeholder" aria-label={`${item.title} 캡처 예시 이미지 자리 표시`}>
