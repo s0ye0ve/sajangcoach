@@ -14,7 +14,7 @@ export function S7AllComplete({ queue }: Props) {
 
   return (
     <div className="screen">
-      <p className="todo-text" style={{ fontSize: 20, marginBottom: 24 }}>
+      <p className="todo-text" style={{ fontSize: 23, marginBottom: 24 }}>
         {isEmpty ? '지금은 처리할 항목이 없어요' : '오늘 할 수 있는 건 다 했어요'}
       </p>
 

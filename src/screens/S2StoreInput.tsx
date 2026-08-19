@@ -82,7 +82,7 @@ export function S2StoreInput({ onSubmit, error }: Props) {
 
   return (
     <div className="screen">
-      <h1 className="intro-title" style={{ fontSize: 20 }}>
+      <h1 className="intro-title" style={{ fontSize: 24 }}>
         가게 정보를 확인할 수 있는
         <br />
         화면을 올려주세요

@@ -12,7 +12,7 @@ export function S6ItemComplete({ item, onNext }: Props) {
   return (
     <div className="screen">
       <div className="center-column">
-        <p className="todo-text" style={{ fontSize: 20 }}>
+        <p className="todo-text" style={{ fontSize: 23 }}>
           {content.completionText}
         </p>
       </div>
