@@ -102,6 +102,7 @@ body {
   padding: 14px;
   border: 1px solid #2563eb;
   border-radius: 10px;
+  background: #eff6ff;
   color: #2563eb;
   font-size: 16px;
   font-weight: 700;
@@ -126,6 +127,7 @@ body {
 }
 
 .onboarding-actions .btn-outline {
+  background: #f7f7f8;
   color: #555;
   font-size: 15px;
   font-weight: 600;
