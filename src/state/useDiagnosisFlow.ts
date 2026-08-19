@@ -6,7 +6,7 @@ import { mockStoreInputService, type StoreCaptureInput } from '../services/store
 import { diagnosisService } from '../services/diagnosisService';
 
 export type Screen = 'S1' | 'S2' | 'S3' | 'S4' | 'S5' | 'S6' | 'S7';
-export type OnboardingStep = 1 | 2 | 3;
+export type OnboardingStep = 1 | 2 | 3 | 4;
 
 export interface OnboardingState {
   step: OnboardingStep;

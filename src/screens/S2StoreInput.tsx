@@ -47,7 +47,7 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
     }
     const handlePopState = (event: PopStateEvent) => {
       const previousStep = event.state?.onboardingStep;
-      if (previousStep === 1 || previousStep === 2 || previousStep === 3) {
+      if (previousStep === 1 || previousStep === 2 || previousStep === 3 || previousStep === 4) {
         onUpdate({ step: previousStep });
       }
     };
@@ -89,8 +89,8 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
   return (
     <div className="screen input-flow">
       <div className="onboarding-topbar">
-        <div className="progress">{step} / 3</div>
         {step > 1 && <button className="back-action" type="button" onClick={goBack}>← 이전</button>}
+        <div className="progress">{step} / 4</div>
       </div>
 
       {step === 1 && <>
@@ -104,24 +104,8 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
       </>}
 
       {step === 2 && <>
-        <h1 className="intro-title" style={{ fontSize: 24 }}>헬스장을<br />확인해 주세요</h1>
-        <p className="intro-desc">네이버 플레이스 화면을 캡처해 올리면<br />헬스장에서 지금 확인해야 할 부분을 찾아드려요.</p>
-        <div className="input-summary"><span>헬스장 이름</span><strong>{gymName}</strong></div>
-        <ol className="onboarding-actions">
-          <li>
-            <span>1. 네이버 지도에서 내 헬스장 찾기</span>
-            <a className="map-find-button" href="https://map.naver.com/" target="_blank" rel="noreferrer">네이버 지도에서 내 헬스장 찾기 ↗</a>
-          </li>
-          <li>
-            <span>2. 어떤 화면을 캡처해야 하는지 확인</span>
-            <button className="btn-outline" type="button" onClick={() => goToStep(3)}>캡처 가이드 보기</button>
-          </li>
-        </ol>
-      </>}
-
-      {step === 3 && <>
         <h1 className="intro-title" style={{ fontSize: 24 }}>이 화면들을<br />캡처해 주세요</h1>
-        <p className="intro-desc">진단에 필요한 화면을 예시처럼 캡처해 주세요.</p>
+        <p className="intro-desc">네이버 지도에 들어가기 전에<br />필요한 화면을 미리 확인해 주세요.</p>
         <div className="guide-list">
           {CAPTURE_GUIDE_ITEMS.map((item) => <article className="guide-card" key={item.title}>
             <div className="guide-placeholder" aria-label={`${item.title} 캡처 예시 이미지 자리 표시`}>
@@ -131,6 +115,22 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
             <p>{item.description}</p>
           </article>)}
         </div>
+        <button className="btn-primary guide-next-button" type="button" onClick={() => goToStep(3)}>내 헬스장 찾으러 가기</button>
+      </>}
+
+      {step === 3 && <>
+        <h1 className="intro-title" style={{ fontSize: 24 }}>내 헬스장을<br />찾아 주세요</h1>
+        <p className="intro-desc">가이드에서 본 화면들을 캡처한 뒤<br />다시 돌아와 주세요.</p>
+        <div className="input-summary"><span>헬스장 이름</span><strong>{gymName}</strong></div>
+        <div className="map-action">
+          <a className="map-find-button" href="https://map.naver.com/" target="_blank" rel="noreferrer">네이버 지도에서 내 헬스장 찾기 ↗</a>
+        </div>
+        <button className="btn-primary map-next-button" type="button" onClick={() => goToStep(4)}>캡처 이미지 올리기</button>
+      </>}
+
+      {step === 4 && <>
+        <h1 className="intro-title" style={{ fontSize: 24 }}>캡처한 화면을<br />올려주세요</h1>
+        <p className="intro-desc">여러 장의 이미지를 올리면<br />헬스장 관리 상태를 진단해드려요.</p>
         <div className="upload-section">
           <div className="section-heading">캡처한 화면을 올려주세요</div>
           <button className="upload-box" type="button" onClick={() => inputRef.current?.click()}>

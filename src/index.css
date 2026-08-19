@@ -33,9 +33,10 @@ body {
 
 .onboarding-topbar {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-height: 30px;
   margin-bottom: 12px;
 }
 
@@ -131,6 +132,15 @@ body {
   color: #555;
   font-size: 15px;
   font-weight: 600;
+}
+
+.guide-next-button,
+.map-next-button {
+  margin-top: 28px;
+}
+
+.map-action {
+  margin-top: 30px;
 }
 
 .guide-list {
