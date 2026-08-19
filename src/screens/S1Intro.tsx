@@ -4,8 +4,9 @@ interface Props {
 
 export function S1Intro({ onStart }: Props) {
   return (
-    <div className="screen">
+    <div className="screen intro-screen">
       <div className="spacer" />
+      <img className="intro-logo" src="/brand/sajangcoach-logo.png" alt="사장코치" />
       <h1 className="intro-title">
         우리 헬스장, 제대로
         <br />

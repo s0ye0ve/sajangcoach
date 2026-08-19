@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { CAPTURE_GUIDE_ITEMS } from '../content/captureGuideContent';
+import { CAPTURE_GUIDE_ITEMS, type CaptureGuideItem } from '../content/captureGuideContent';
 import type { CaptureImage } from '../domain/types';
 import type { StoreCaptureInput } from '../services/storeInputService';
 import type { OnboardingState, OnboardingStep } from '../state/useDiagnosisFlow';
@@ -38,6 +38,7 @@ function readFile(file: File): Promise<CaptureImage> {
 
 export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [expandedGuide, setExpandedGuide] = useState<CaptureGuideItem | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { step, gymName, captures } = onboarding;
 
@@ -108,13 +109,27 @@ export function S2StoreInput({ onboarding, onUpdate, onSubmit, error }: Props) {
         <p className="intro-desc guide-header-desc">네이버 지도에 들어가기 전에<br />아래 4개 화면을 확인해 주세요.</p>
         <div className="guide-list">
           {CAPTURE_GUIDE_ITEMS.map((item) => <article className="guide-card" key={item.title}>
-            <div className="guide-placeholder" aria-label={`${item.title} 캡처 예시 이미지 자리 표시`}>
-              {item.placeholderLabel.split('\n').map((line) => <span key={line}>{line}</span>)}
-            </div>
+            <button className="guide-image-button" type="button" onClick={() => setExpandedGuide(item)} aria-label={`${item.title} 예시 이미지 확대하기`}>
+              <img src={item.imageSrc} alt={`${item.title} 캡처 예시`} />
+              <span className="guide-expand-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M9 4H4v5M4 4l6 6M15 20h5v-5M20 20l-6-6" /></svg>
+              </span>
+            </button>
             <h2>{item.title}</h2>
             <p>{item.description}</p>
           </article>)}
         </div>
+        {expandedGuide && (
+          <div className="guide-image-modal" role="dialog" aria-modal="true" aria-labelledby="guide-image-modal-title" onClick={() => setExpandedGuide(null)}>
+            <div className="guide-image-modal-content" onClick={(event) => event.stopPropagation()}>
+              <div className="guide-image-modal-header">
+                <h2 id="guide-image-modal-title">{expandedGuide.title} 예시</h2>
+                <button type="button" onClick={() => setExpandedGuide(null)} aria-label="예시 이미지 닫기">×</button>
+              </div>
+              <img src={expandedGuide.imageSrc} alt={`${expandedGuide.title} 캡처 예시 확대`} />
+            </div>
+          </div>
+        )}
         <button className="btn-primary guide-next-button" type="button" onClick={() => goToStep(3)}>내 헬스장 찾으러 가기</button>
       </>}
 

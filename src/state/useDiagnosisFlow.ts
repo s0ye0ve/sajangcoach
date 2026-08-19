@@ -5,7 +5,7 @@ import { provisionalPriority } from '../domain/provisionalPriority';
 import { mockStoreInputService, type StoreCaptureInput } from '../services/storeInputService';
 import { diagnosisService } from '../services/diagnosisService';
 
-export type Screen = 'S1' | 'S2' | 'S3' | 'S4' | 'S5' | 'S6' | 'S7';
+export type Screen = 'S1' | 'S2' | 'S3' | 'S4' | 'S5' | 'S6' | 'S7' | 'S8';
 export type OnboardingStep = 1 | 2 | 3 | 4;
 
 export interface OnboardingState {
@@ -101,6 +101,15 @@ export function useDiagnosisFlow() {
     });
   }, []);
 
+  // 실제 후속 서비스가 정해지면 S8 대신 해당 서비스 진입 상태로 교체한다.
+  const openDetailedAnalysis = useCallback(() => {
+    setState((prev) => ({ ...prev, screen: 'S8' }));
+  }, []);
+
+  const returnToComplete = useCallback(() => {
+    setState((prev) => ({ ...prev, screen: 'S7' }));
+  }, []);
+
   const currentItem = state.queue[state.currentIndex] ?? null;
 
   return {
@@ -113,5 +122,7 @@ export function useDiagnosisFlow() {
     skipItem,
     confirmSupport,
     goNext,
+    openDetailedAnalysis,
+    returnToComplete,
   };
 }

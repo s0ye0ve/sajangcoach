@@ -6,9 +6,13 @@ import { S4DiagnosisResult } from './screens/S4DiagnosisResult';
 import { S5ExecutionSupport } from './screens/S5ExecutionSupport';
 import { S6ItemComplete } from './screens/S6ItemComplete';
 import { S7AllComplete } from './screens/S7AllComplete';
+import { S8DetailedAnalysisPlaceholder } from './screens/S8DetailedAnalysisPlaceholder';
 
 function App() {
-  const { state, currentItem, start, submitCapture, updateOnboarding, pressCta, skipItem, confirmSupport, goNext } =
+  const {
+    state, currentItem, start, submitCapture, updateOnboarding, pressCta, skipItem, confirmSupport, goNext,
+    openDetailedAnalysis, returnToComplete,
+  } =
     useDiagnosisFlow();
 
   switch (state.screen) {
@@ -40,7 +44,9 @@ function App() {
     case 'S6':
       return currentItem ? <S6ItemComplete item={currentItem} onNext={goNext} /> : null;
     case 'S7':
-      return <S7AllComplete queue={state.queue} />;
+      return <S7AllComplete queue={state.queue} onOpenDetailedAnalysis={openDetailedAnalysis} />;
+    case 'S8':
+      return <S8DetailedAnalysisPlaceholder onBack={returnToComplete} />;
     default:
       return null;
   }

@@ -1,17 +1,45 @@
+import { useEffect, useState } from 'react';
 import type { DiagnosisItem } from '../domain/types';
 import { DIAGNOSIS_CONTENT } from '../content/diagnosisContent';
 import { CompletionCheck } from '../components/CompletionCheck';
 
+const ANALYSIS_PREVIEW_IMAGES = [
+  '/follow-up-analysis/place-overview-1.jpeg',
+  '/follow-up-analysis/place-overview-2.jpeg',
+  '/follow-up-analysis/place-overview-3.jpeg',
+];
+
 interface Props {
   queue: DiagnosisItem[];
+  onOpenDetailedAnalysis: () => void;
 }
 
-export function S7AllComplete({ queue }: Props) {
+export function S7AllComplete({ queue, onOpenDetailedAnalysis }: Props) {
   const resolved = queue.filter((item) => item.resolvedAt !== null);
   const unresolved = queue.filter((item) => item.resolvedAt === null);
   const recurringResolved = resolved.filter((item) => item.recurrence === 'recurring');
-
   const isEmpty = queue.length === 0;
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [previewIndex, setPreviewIndex] = useState(0);
+
+  useEffect(() => {
+    if (isEmpty) return;
+
+    const sheetTimer = window.setTimeout(() => setIsSheetOpen(true), 2000);
+    return () => window.clearTimeout(sheetTimer);
+  }, [isEmpty]);
+
+  useEffect(() => {
+    if (!isSheetOpen) return;
+
+    const previewTimer = window.setInterval(() => {
+      setPreviewIndex((current) => (current + 1) % ANALYSIS_PREVIEW_IMAGES.length);
+    }, 2600);
+    return () => window.clearInterval(previewTimer);
+  }, [isSheetOpen]);
+
+  const previousPreview = (previewIndex + ANALYSIS_PREVIEW_IMAGES.length - 1) % ANALYSIS_PREVIEW_IMAGES.length;
+  const nextPreview = (previewIndex + 1) % ANALYSIS_PREVIEW_IMAGES.length;
 
   return (
     <div className="screen all-complete-screen">
@@ -59,6 +87,34 @@ export function S7AllComplete({ queue }: Props) {
         </>
       )}
       </div>
+
+      {isSheetOpen && (
+        <section className="follow-up-sheet" aria-labelledby="follow-up-title">
+          <div className="follow-up-sheet-handle" aria-hidden="true" />
+          <h2 id="follow-up-title">우리 헬스장,<br />더 자세히 보고 싶나요?</h2>
+          <p>
+            지금은 바로 고칠 수 있는 부분을 중심으로 확인했어요.<br />
+            더 자세한 분석에서는 플레이스 전체 상태와<br />
+            개선할 부분을 더 깊게 확인할 수 있어요.
+          </p>
+          <div className="analysis-preview-carousel" aria-label="더 자세한 분석 예시">
+            <img className="analysis-preview-side" src={ANALYSIS_PREVIEW_IMAGES[previousPreview]} alt="" />
+            <img
+              className="analysis-preview-main"
+              key={ANALYSIS_PREVIEW_IMAGES[previewIndex]}
+              src={ANALYSIS_PREVIEW_IMAGES[previewIndex]}
+              alt={`더 자세한 분석 예시 ${previewIndex + 1}`}
+            />
+            <img className="analysis-preview-side" src={ANALYSIS_PREVIEW_IMAGES[nextPreview]} alt="" />
+          </div>
+          <button className="btn-primary" type="button" onClick={onOpenDetailedAnalysis}>
+            더 자세히 분석하기
+          </button>
+          <button className="follow-up-dismiss" type="button" onClick={() => setIsSheetOpen(false)}>
+            지금은 괜찮아요
+          </button>
+        </section>
+      )}
     </div>
   );
 }
