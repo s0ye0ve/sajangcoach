@@ -36,9 +36,22 @@ body {
 }
 
 .input-summary {
-  margin-top: 12px;
-  color: #666;
+  margin-top: 20px;
+}
+
+.input-summary span {
+  display: block;
+  margin-bottom: 4px;
+  color: #777;
   font-size: 13px;
+}
+
+.input-summary strong {
+  display: block;
+  color: #1a1a1a;
+  font-size: 19px;
+  line-height: 1.35;
+  font-weight: 700;
 }
 
 .input-stage {

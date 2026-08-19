@@ -95,7 +95,12 @@ export function S2StoreInput({ onSubmit, error }: Props) {
           {step === 2 && '네이버 플레이스 주소를 붙여넣어 주세요.'}
           {step === 3 && '영업시간, 휴무일, 사진, 새소식, 리뷰가 보이도록 캡처해 주세요.'}
         </p>
-        {step > 1 && <div className="input-summary">헬스장 이름 · {storeName}</div>}
+        {step > 1 && (
+          <div className="input-summary">
+            <span>헬스장 이름</span>
+            <strong>{storeName}</strong>
+          </div>
+        )}
         {step === 3 && <div className="input-summary">플레이스 주소가 입력됐어요</div>}
       </div>
 
