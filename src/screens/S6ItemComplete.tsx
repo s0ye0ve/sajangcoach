@@ -1,5 +1,6 @@
 import type { DiagnosisItem } from '../domain/types';
 import { DIAGNOSIS_CONTENT } from '../content/diagnosisContent';
+import { CompletionCheck } from '../components/CompletionCheck';
 
 interface Props {
   item: DiagnosisItem;
@@ -12,6 +13,7 @@ export function S6ItemComplete({ item, onNext }: Props) {
   return (
     <div className="screen">
       <div className="center-column">
+        <CompletionCheck />
         <p className="todo-text" style={{ fontSize: 23 }}>
           {content.completionText}
         </p>

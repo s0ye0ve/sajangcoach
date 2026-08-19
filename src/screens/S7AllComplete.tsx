@@ -1,5 +1,6 @@
 import type { DiagnosisItem } from '../domain/types';
 import { DIAGNOSIS_CONTENT } from '../content/diagnosisContent';
+import { CompletionCheck } from '../components/CompletionCheck';
 
 interface Props {
   queue: DiagnosisItem[];
@@ -13,11 +14,15 @@ export function S7AllComplete({ queue }: Props) {
   const isEmpty = queue.length === 0;
 
   return (
-    <div className="screen">
-      <p className="todo-text" style={{ fontSize: 23, marginBottom: 24 }}>
-        {isEmpty ? '지금은 처리할 항목이 없어요' : '오늘 할 수 있는 건 다 했어요'}
-      </p>
+    <div className="screen all-complete-screen">
+      <header className="all-complete-hero">
+        {!isEmpty && <CompletionCheck />}
+        <p className="todo-text all-complete-title">
+          {isEmpty ? '지금은 처리할 항목이 없어요' : '오늘 할 수 있는 건 다 했어요'}
+        </p>
+      </header>
 
+      <div className="all-complete-summary">
       {resolved.length > 0 && (
         <>
           <div className="section-heading">오늘 처리한 항목</div>
@@ -53,6 +58,7 @@ export function S7AllComplete({ queue }: Props) {
           </ul>
         </>
       )}
+      </div>
     </div>
   );
 }
