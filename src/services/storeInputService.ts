@@ -4,25 +4,24 @@
 // 이후 실제 진단 데이터 수집 방식(예: 캡처 OCR/분석)으로 교체할 때는 이 파일만 바꾸면 된다.
 
 import type { Store } from '../domain/types';
-import type { MockDatasetKey } from '../data/mockDiagnosisDatasets';
+import type { CaptureImage } from '../domain/types';
 
 export interface StoreCaptureInput {
   type: 'captureUpload';
-  fileName: string | null;
-  datasetKey: MockDatasetKey;
+  storeName: string;
+  placeUrl: string;
+  captures: CaptureImage[];
 }
 
 export interface StoreInputService {
   submitCapture(input: StoreCaptureInput): Promise<Store>;
 }
 
-const MOCK_STORE_NAME = '테스트 헬스장';
-
 export const mockStoreInputService: StoreInputService = {
   async submitCapture(input) {
     return {
       id: `store-${Date.now()}`,
-      name: MOCK_STORE_NAME,
+      name: input.storeName,
       sourceInput: input,
     };
   },

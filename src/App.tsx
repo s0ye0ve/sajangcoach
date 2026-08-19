@@ -15,9 +15,9 @@ function App() {
     case 'S1':
       return <S1Intro onStart={start} />;
     case 'S2':
-      return <S2StoreInput onSubmit={submitCapture} />;
+      return <S2StoreInput onSubmit={submitCapture} error={state.error} />;
     case 'S3':
-      return <S3Diagnosing />;
+      return <S3Diagnosing storeName={state.store?.name ?? '가게'} />;
     case 'S4':
       return currentItem ? (
         <S4DiagnosisResult

@@ -138,6 +138,7 @@ body {
 }
 
 .upload-box {
+  width: 100%;
   border: 1.5px dashed #ccc;
   border-radius: 12px;
   padding: 28px 16px;
@@ -145,6 +146,39 @@ body {
   color: #888;
   font-size: 14px;
   margin-bottom: 16px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.capture-list {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+}
+
+.capture-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+
+.capture-list span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.capture-list button {
+  flex: none;
+  border: 0;
+  background: transparent;
+  color: #777;
+  cursor: pointer;
+  font: inherit;
 }
 
 .upload-box.has-file {

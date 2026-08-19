@@ -3,7 +3,7 @@ import type { Diagnosis, DiagnosisItem, ExecutionDraft, ItemKey, Store } from '.
 import { selectFailedItems } from '../domain/selectFailedItems';
 import { provisionalPriority } from '../domain/provisionalPriority';
 import { mockStoreInputService, type StoreCaptureInput } from '../services/storeInputService';
-import { mockDiagnosisService } from '../services/diagnosisService';
+import { diagnosisService } from '../services/diagnosisService';
 
 export type Screen = 'S1' | 'S2' | 'S3' | 'S4' | 'S5' | 'S6' | 'S7';
 
@@ -14,6 +14,7 @@ interface FlowState {
   queue: DiagnosisItem[];
   currentIndex: number;
   drafts: Partial<Record<ItemKey, ExecutionDraft>>;
+  error: string | null;
 }
 
 const initialState: FlowState = {
@@ -23,32 +24,38 @@ const initialState: FlowState = {
   queue: [],
   currentIndex: 0,
   drafts: {},
+  error: null,
 };
 
 export function useDiagnosisFlow() {
   const [state, setState] = useState<FlowState>(initialState);
 
   const start = useCallback(() => {
-    setState((prev) => ({ ...prev, screen: 'S2' }));
+    setState((prev) => ({ ...prev, screen: 'S2', error: null }));
   }, []);
 
   const submitCapture = useCallback(async (input: StoreCaptureInput) => {
     const store = await mockStoreInputService.submitCapture(input);
-    setState((prev) => ({ ...prev, store, screen: 'S3' }));
+    setState((prev) => ({ ...prev, store, screen: 'S3', error: null }));
 
     // 진단 진행 화면을 사용자가 인지할 수 있도록 최소한의 지연을 둔다 (연출용, 판정 로직과 무관)
     await new Promise((resolve) => setTimeout(resolve, 700));
-    const diagnosis = await mockDiagnosisService.runDiagnosis(store);
-    const failed = selectFailedItems(diagnosis);
-    const queue = provisionalPriority(failed);
+    try {
+      const diagnosis = await diagnosisService.runDiagnosis(store);
+      const failed = selectFailedItems(diagnosis);
+      const queue = provisionalPriority(failed);
 
-    setState((prev) => ({
-      ...prev,
-      diagnosis,
-      queue,
-      currentIndex: 0,
-      screen: queue.length > 0 ? 'S4' : 'S7',
-    }));
+      setState((prev) => ({
+        ...prev,
+        diagnosis,
+        queue,
+        currentIndex: 0,
+        screen: queue.length > 0 ? 'S4' : 'S7',
+      }));
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '이미지 분석을 시작하지 못했어요.';
+      setState((prev) => ({ ...prev, screen: 'S2', error: message }));
+    }
   }, []);
 
   const pressCta = useCallback(() => {

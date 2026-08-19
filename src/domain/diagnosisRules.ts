@@ -5,9 +5,9 @@
 
 import type { DiagnosisItem } from './types';
 import { MOCK_DIAGNOSIS_DATASETS, type MockDatasetKey } from '../data/mockDiagnosisDatasets';
-import type { StoreCaptureInput } from '../services/storeInputService';
 
-export function judgeDiagnosisItems(input: StoreCaptureInput): DiagnosisItem[] {
-  const datasetKey: MockDatasetKey = input.datasetKey;
+// 실제 이미지 분석을 개발할 때 비교용으로 남겨 둔 mock 판정 함수.
+// 앱 흐름은 api/diagnose.js의 실제 분석 결과를 사용한다.
+export function judgeMockDiagnosisItems(datasetKey: MockDatasetKey): DiagnosisItem[] {
   return MOCK_DIAGNOSIS_DATASETS[datasetKey].map((item) => ({ ...item }));
 }

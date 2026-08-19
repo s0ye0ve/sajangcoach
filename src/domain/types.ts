@@ -12,6 +12,11 @@ export interface Store {
   sourceInput: unknown;
 }
 
+export interface CaptureImage {
+  name: string;
+  dataUrl: string;
+}
+
 export interface DiagnosisItem {
   itemKey: ItemKey;
   status: 'pass' | 'fail';

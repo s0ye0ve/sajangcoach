@@ -1,32 +1,28 @@
-# React + TypeScript + Vite
+# 사장님 코치
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+헬스장 사장님이 네이버 플레이스 캡처를 올리면 영업시간, 휴무일, 대표 사진, 새소식, 리뷰 답글을 진단하고 실행을 돕는 모바일 웹 MVP입니다.
 
-Currently, two official plugins are available:
+## 실행
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## 실제 이미지 진단 설정
+
+캡처 분석은 Vercel 서버 함수(`/api/diagnose`)에서 실행됩니다. 브라우저에는 API 키를 넣지 않습니다.
+
+1. OpenAI API 키를 발급합니다.
+2. Vercel 프로젝트의 **Settings → Environment Variables**에 `OPENAI_API_KEY`를 등록합니다.
+3. 필요하면 `OPENAI_VISION_MODEL`에 사용할 비전 모델을 지정합니다. 기본값은 `gpt-5.6-luna`입니다.
+4. `main` 브랜치에 푸시하거나 Vercel에서 재배포합니다.
+
+키가 없으면 앱은 분석을 시작하지 않고 설정이 필요하다는 안내를 표시합니다.
+
+## 분석 원칙
+
+- 사용자가 업로드한 1~5장의 캡처만 읽습니다.
+- 네이버 플레이스 페이지를 자동 탐색하거나 크롤링하지 않습니다.
+- 화면에 명확히 보이는 근거가 있을 때만 문제 항목으로 분류합니다.
+- 실제 판정 기준과 우선순위는 교체 가능한 모듈로 분리되어 있습니다.
