@@ -1,11 +1,18 @@
 import { useCallback, useState } from 'react';
-import type { Diagnosis, DiagnosisItem, ExecutionDraft, ItemKey, Store } from '../domain/types';
+import type { CaptureImage, Diagnosis, DiagnosisItem, ExecutionDraft, ItemKey, Store } from '../domain/types';
 import { selectFailedItems } from '../domain/selectFailedItems';
 import { provisionalPriority } from '../domain/provisionalPriority';
 import { mockStoreInputService, type StoreCaptureInput } from '../services/storeInputService';
 import { diagnosisService } from '../services/diagnosisService';
 
 export type Screen = 'S1' | 'S2' | 'S3' | 'S4' | 'S5' | 'S6' | 'S7';
+export type OnboardingStep = 1 | 2 | 3;
+
+export interface OnboardingState {
+  step: OnboardingStep;
+  gymName: string;
+  captures: CaptureImage[];
+}
 
 interface FlowState {
   screen: Screen;
@@ -15,6 +22,7 @@ interface FlowState {
   currentIndex: number;
   drafts: Partial<Record<ItemKey, ExecutionDraft>>;
   error: string | null;
+  onboarding: OnboardingState;
 }
 
 const initialState: FlowState = {
@@ -25,6 +33,7 @@ const initialState: FlowState = {
   currentIndex: 0,
   drafts: {},
   error: null,
+  onboarding: { step: 1, gymName: '', captures: [] },
 };
 
 export function useDiagnosisFlow() {
@@ -32,6 +41,10 @@ export function useDiagnosisFlow() {
 
   const start = useCallback(() => {
     setState((prev) => ({ ...prev, screen: 'S2', error: null }));
+  }, []);
+
+  const updateOnboarding = useCallback((update: Partial<OnboardingState>) => {
+    setState((prev) => ({ ...prev, onboarding: { ...prev.onboarding, ...update }, error: null }));
   }, []);
 
   const submitCapture = useCallback(async (input: StoreCaptureInput) => {
@@ -93,6 +106,7 @@ export function useDiagnosisFlow() {
   return {
     state,
     currentItem,
+    updateOnboarding,
     start,
     submitCapture,
     pressCta,

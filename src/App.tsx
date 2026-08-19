@@ -8,14 +8,19 @@ import { S6ItemComplete } from './screens/S6ItemComplete';
 import { S7AllComplete } from './screens/S7AllComplete';
 
 function App() {
-  const { state, currentItem, start, submitCapture, pressCta, skipItem, confirmSupport, goNext } =
+  const { state, currentItem, start, submitCapture, updateOnboarding, pressCta, skipItem, confirmSupport, goNext } =
     useDiagnosisFlow();
 
   switch (state.screen) {
     case 'S1':
       return <S1Intro onStart={start} />;
     case 'S2':
-      return <S2StoreInput onSubmit={submitCapture} error={state.error} />;
+      return <S2StoreInput
+        onboarding={state.onboarding}
+        onUpdate={updateOnboarding}
+        onSubmit={submitCapture}
+        error={state.error}
+      />;
     case 'S3':
       return <S3Diagnosing storeName={state.store?.name ?? '헬스장'} />;
     case 'S4':
