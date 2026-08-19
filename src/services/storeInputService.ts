@@ -9,7 +9,6 @@ import type { CaptureImage } from '../domain/types';
 export interface StoreCaptureInput {
   type: 'captureUpload';
   storeName: string;
-  placeUrl: string;
   captures: CaptureImage[];
 }
 

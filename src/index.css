@@ -74,17 +74,97 @@ body {
   border-radius: 8px;
 }
 
-.map-shortcut {
-  display: inline-block;
-  margin-top: 12px;
-  color: #2563eb;
-  font-size: 14px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 .input-stage .btn-primary {
   margin-top: 16px;
+}
+
+.map-find-button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #2563eb;
+  border-radius: 10px;
+  color: #2563eb;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+}
+
+.guide-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.guide-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+}
+
+.guide-placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 106px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f4f5f7;
+  color: #8b8b8b;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.guide-card h2 {
+  margin: 12px 0 4px;
+  font-size: 16px;
+}
+
+.guide-card p {
+  margin: 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.upload-section {
+  margin-top: 28px;
+}
+
+.capture-preview-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.capture-preview {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.capture-preview img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.capture-preview button {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: rgb(0 0 0 / 70%);
+  color: #fff;
+  font-size: 11px;
+  cursor: pointer;
 }
 
 @keyframes slide-up {
