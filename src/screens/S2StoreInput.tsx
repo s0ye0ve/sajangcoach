@@ -114,6 +114,9 @@ export function S2StoreInput({ onSubmit, error }: Props) {
         {step === 2 && <>
           <label className="field-label" htmlFor="place-url">네이버 플레이스 주소</label>
           <input id="place-url" type="url" value={placeUrl} onChange={(event) => setPlaceUrl(event.target.value)} placeholder="https://m.place.naver.com/..." onKeyDown={(event) => event.key === 'Enter' && placeUrl.trim() && setStep(3)} />
+          <a className="map-shortcut" href="https://map.naver.com/" target="_blank" rel="noreferrer">
+            네이버 지도에서 내 헬스장 찾기 ↗
+          </a>
           <button className="btn-primary" disabled={!placeUrl.trim()} onClick={() => setStep(3)}>다음</button>
         </>}
 

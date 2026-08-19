@@ -74,6 +74,15 @@ body {
   border-radius: 8px;
 }
 
+.map-shortcut {
+  display: inline-block;
+  margin-top: 12px;
+  color: #666;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .input-stage .btn-primary {
   margin-top: 16px;
 }
