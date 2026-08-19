@@ -99,7 +99,7 @@ export function S2StoreInput({ onSubmit, error }: Props) {
         {step === 3 && <div className="input-summary">플레이스 주소가 입력됐어요</div>}
       </div>
 
-      <div className="input-sheet" key={step}>
+      <div className="input-stage" key={step}>
         {step === 1 && <>
           <label className="field-label" htmlFor="store-name">가게 이름</label>
           <input id="store-name" type="text" value={storeName} onChange={(event) => setStoreName(event.target.value)} placeholder="예: 우리동네 헬스장" onKeyDown={(event) => event.key === 'Enter' && storeName.trim() && setStep(2)} />
